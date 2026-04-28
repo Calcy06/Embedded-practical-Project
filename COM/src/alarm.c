@@ -6,22 +6,17 @@
 #include <modbus/modbus.h>
 #include <libubox/uloop.h>
 
-// 配置：改成你电脑上的串口
 #define SERIAL_PORT "/dev/ttyUSB0"
 #define BAUD_RATE 9600
 #define SLAVE_ADDR 1
-
-
-// ====================== 只改这里 ======================
 #define ALARM_REG_ADDR 0x0001 // 灯光寄存器
-// ======================================================
 
 modbus_t *ctx;
 
 // uloop 定时器结构体
 static struct uloop_timeout g_alarm_timer;
 
-// 初始化Modbus连接（完全不动）
+// 初始化Modbus连接
 int modbus_alarm_init(void)
 {
     ctx = modbus_new_rtu(SERIAL_PORT, BAUD_RATE, 'N', 8, 1);
@@ -41,8 +36,7 @@ int modbus_alarm_init(void)
     return 0;
 }
 
-// ====================== 只改这个函数 ======================
-// 控制报警器：1=亮灯，0=熄灯  纯灯光！无声音！
+// 控制报警器：1=亮灯，0=熄灯
 void alarm_control(int enable)
 {
     int ret;
@@ -59,11 +53,10 @@ void alarm_control(int enable)
         perror("亮灯控制失败");
         return;
     }
-    printf("灯光状态：%s\n", enable ? "✅ 亮灯" : "❌ 熄灯");
+    printf("灯光状态：%s\n", enable ? "亮灯" : "熄灯");
 }
-// ============================================================
 
-// 你原来的定时器，完全不动
+// 定时器回调函数：每秒翻转灯光状态
 static void alarm_timer_cb(struct uloop_timeout *t)
 {
     static int state = 0;
@@ -74,8 +67,7 @@ static void alarm_timer_cb(struct uloop_timeout *t)
     uloop_timeout_set(t, 1000);
 }
 
-// 你原来的 main，完全不动
-int main(void)
+int main()
 {
     if (modbus_alarm_init() < 0) {
         return -1;
