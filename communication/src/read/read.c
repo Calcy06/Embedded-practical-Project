@@ -2,7 +2,7 @@
 #include <uci.h>
 #include <stdio.h>
 
-#define CFG_PATH "/root/test/com/client"
+#define CFG_PATH "/root/test/com/cfg/client"
 #define BUF_SIZE 64
 
 char SERVER_IP[BUF_SIZE];
