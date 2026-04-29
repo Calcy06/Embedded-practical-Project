@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../src/modbus/modbus.h
+stdint.h
+-
+
+/root/test/alarm_ubus/src/ubus/ubus.c
+ubus.h
+/root/test/alarm_ubus/src/ubus/ubus.h
+modbus.h
+/root/test/alarm_ubus/src/ubus/modbus.h
+libubus.h
+-
+libubox/blobmsg_json.h
+-
+string.h
+-
+
+/root/test/alarm_ubus/src/ubus/ubus.h
+modbus.h
+/root/test/alarm_ubus/src/ubus/modbus.h
+
