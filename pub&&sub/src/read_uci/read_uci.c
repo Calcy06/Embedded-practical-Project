@@ -81,8 +81,8 @@ static void read_uci_serial()
             name = strdup(n ? n : "NoName");
             serial_type = t ? atoi(t) : 0;
             speed = s ? atoi(s) : 9600;
-            data_bits = data_bits_str ? atoi(data_bits_str) : 8;
-            stop_bits = stop_bits_str ? atoi(stop_bits_str) : 1;
+            data_bits = d ? atoi(d) : 8;
+            stop_bits = st ? atoi(st) : 1;
             if (check_bits_str)
             {
                 check_bits[0] = check_bits_str[0];
@@ -97,9 +97,12 @@ static void read_uci_serial()
         uci_unload(ctx, pkg);
         uci_free_context(ctx);
     }
+}
 
     void read_uci()
     {
+        // 初始化传感器链表
+        INIT_LIST_HEAD(&sensor_list);
         // 读取传感器的从站地址和名字
         read_uci_sensor();
         // 读取总线数据

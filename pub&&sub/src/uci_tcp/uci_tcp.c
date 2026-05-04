@@ -54,8 +54,6 @@ int reconnect()
     // 将客户端socket加入uloop事件循环，监听可读事件(socket 就是程序用来联网、收发网络数据的工具。)
     // 当服务器发消息来时，会触发回调函数
     uloop_fd_add(&c_fd, ULOOP_READ);
-    // 重置定时器，10秒后再次尝试重连
-    uloop_timeout_set(&c_send, 10000); 
 
     return 0;
 }

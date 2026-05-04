@@ -3,7 +3,7 @@
 // 统一释放所有资源
 void free_all_resources(void)
 {
-    struct my_node *node, *tmp;
+    struct sensor_node *node, *tmp;
 
     // 1. 释放传感器链表
     list_for_each_entry_safe(node, tmp, &sensor_list, list) {

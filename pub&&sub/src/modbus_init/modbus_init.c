@@ -3,7 +3,7 @@
 modbus_serial_t arr_sensor[SIZE];
 
 // 定义一个函数，用于注册Modbus串口
-int modbus_serial_registers(modbus_serial_t *arr_sensor)
+int modbus_serial_registers()
 {
     read_uci();
     if (!name)

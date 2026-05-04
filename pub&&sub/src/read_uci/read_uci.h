@@ -11,7 +11,7 @@
 #define PATH_SENSOR "/root/test/pub_sub/uci_cfg/sensor"
 #define PATH_SERIAL "/root/test/pub_sub/uci_cfg/serial"
 
-struct list_head sensor_list;
+extern struct list_head sensor_list;
 
 struct sensor_node
 {

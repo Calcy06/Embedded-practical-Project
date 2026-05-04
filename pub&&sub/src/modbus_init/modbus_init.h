@@ -11,7 +11,7 @@
 
 typedef struct modbus_serial_s
 {
-    char name[30];        // 名称，最大长度为30个字符
+    // char name[30];        // 名称，最大长度为30个字符(问题：似乎是冗余的代码)
     int serial_type;      // 串口类型，例如RS232, RS485等
     int speed;            // 波特率，例如9600, 115200等
     int data_bits;        // 数据位数，例如8, 7等
@@ -24,7 +24,7 @@ typedef struct modbus_serial_s
 
 #define SIZE 10
 
-extern modbus_serial_t rtuctl[SIZE];
+extern modbus_serial_t arr_sensor[SIZE];
 
 int modbus_serial_registers();
 

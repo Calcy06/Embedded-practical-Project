@@ -10,7 +10,5 @@
 #include "modbus_init.h"
 
 int read_sg();
-void free_sensor_list();
-void free_serial_cfg();
 
 #endif
