@@ -1,0 +1,6 @@
+config serial
+    option name "/dev/ttyUSB0"
+    option speed "4800"
+    option data_bits "8"
+    option stop_bits "1"
+    option check_bits "N"
