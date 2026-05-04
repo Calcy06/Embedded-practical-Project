@@ -11,7 +11,7 @@ static int modbus_serial_registers(modbus_serial_t *arr_sensor)
         printf("错误：串口名称未配置\n");
         return -1;
     }
-    printf("串口配置: name=%s, type=%d, speed=%d, check_bits=%c\n",
+    printf("串口配置: name=%s, type=%d, speed=%d, check_bits=%s\n",
            name, serial_type, speed, check_bits);
 
     for (int i = 0; i < 2; i++)
@@ -21,7 +21,7 @@ static int modbus_serial_registers(modbus_serial_t *arr_sensor)
         arr_sensor[i].speed = speed;
         arr_sensor[i].data_bits = data_bits;
         arr_sensor[i].stop_bits = stop_bits;
-        arr_sensor[i].check_bits = check_bits;
+        snprintf(arr_sensor[i].check_bits, sizeof(arr_sensor[i].check_bits), "%s", check_bits);
         // 打开Modbus RTU端口
         // 参数1：串口设备路径
         // 参数2：波特率
@@ -54,7 +54,7 @@ static int modbus_serial_registers(modbus_serial_t *arr_sensor)
         modbus_rtu_set_rts(arr_sensor[i].ctx, MODBUS_RTU_RTS_UP);
 
         // 建立modbus连接
-        if (modbus_connect(arr_sensor[i].ctx))
+        if (modbus_connect(arr_sensor[i].ctx) == -1)
         {
             printf("第%d个传感器的modbus连接失败\n", i);
             modbus_free(arr_sensor[i].ctx);
@@ -67,7 +67,7 @@ static int modbus_serial_registers(modbus_serial_t *arr_sensor)
         modbus_set_response_timeout(arr_sensor[i].ctx, 3, 0);
     }
 
-    struct serson_node pos;
+    struct serson_node *pos;
     int i = 0;
     list_for_each_entry(pos, &sensor_list, list)
     {
@@ -80,10 +80,10 @@ static int modbus_serial_registers(modbus_serial_t *arr_sensor)
         modbus_set_slave(arr_sensor[i].ctx, pos->slave);
         // 设置传感器名称
         snprintf(arr_sensor[i].sensor_name, sizeof(arr_sensor[i].sensor_name), "%s", pos->name);
-        // 设置从设备地址
+        // 把从设备地址存信息起来
         arr_sensor[i].slave = pos->slave;
 
         i++;
     }
-    retrun 0;
+    return 0;
 }

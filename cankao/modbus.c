@@ -130,7 +130,8 @@ static int modbus_serial_registers(modbus_serial_t *node)
 
     // 设置Modbus调试模式
     modbus_set_debug(node->ctx, TRUE);
-    
+    // 设置从设备地址为1
+    modbus_set_slave(node->ctx, 1);
 
     // 设置串口模式
     // 串口类型为1时，设置为RS232
