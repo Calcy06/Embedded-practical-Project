@@ -67,10 +67,10 @@ static struct ubus_object gg_obj = {
 
 // 声光报警器的数据获取方法（ubus调用的实际处理函数）
 static int sg_get_data(struct ubus_context *ctx,
-                           struct ubus_object *obj,
-                           struct ubus_request_data *req,
-                           const char *method,
-                           struct blob_attr *msg)
+                       struct ubus_object *obj,
+                       struct ubus_request_data *req,
+                       const char *method,
+                       struct blob_attr *msg)
 {
     int data = read_sg();
     printf("pub中sg的data是%d\n", data);
@@ -83,10 +83,10 @@ static int sg_get_data(struct ubus_context *ctx,
 
 // 写声光报警器的寄存器
 static int write_register_shengguang(struct ubus_context *ctx,
-                                 struct ubus_object *obj,
-                                 struct ubus_request_data *req,
-                                 const char *method,
-                                 struct blob_attr *msg)
+                                     struct ubus_object *obj,
+                                     struct ubus_request_data *req,
+                                     const char *method,
+                                     struct blob_attr *msg)
 {
     state = write_register(state);
 
@@ -100,7 +100,7 @@ static struct ubus_method sg_methods[] = {
 };
 
 // 定义声光报警器的ubus对象类型
-static struct ubus_object_type sg_type =UBUS_OBJECT_TYPE("sg", sg_methods);
+static struct ubus_object_type sg_type = UBUS_OBJECT_TYPE("sg", sg_methods);
 
 // 定义 ubus 对象
 static struct ubus_object sg_obj = {
@@ -114,15 +114,15 @@ static struct ubus_object sg_obj = {
 static void notify_timer_cb(struct uloop_timeout *timeout)
 {
     // 推送 gg 数据
-    int data = read_gg();    
-    blob_buf_init(&b1, 0); // 初始化 blob 缓冲区
-    blobmsg_add_u32(&b1, "gg", data);   // 添加键值对："gg": data 到缓冲区
+    int data = read_gg();
+    blob_buf_init(&b1, 0);                          // 初始化 blob 缓冲区
+    blobmsg_add_u32(&b1, "gg", data);               // 添加键值对："gg": data 到缓冲区
     ubus_notify(ctx, &gg_obj, "pub1", b1.head, -1); // 发送通知
 
     // 推送 sg 数据
     data = read_sg();
-    blob_buf_init(&b2, 0); // 初始化 blob 缓冲区
-    blobmsg_add_u32(&b2, "sg", data);   // 添加键值对："sg": data 到缓冲区
+    blob_buf_init(&b2, 0);                          // 初始化 blob 缓冲区
+    blobmsg_add_u32(&b2, "sg", data);               // 添加键值对："sg": data 到缓冲区
     ubus_notify(ctx, &sg_obj, "pub2", b2.head, -1); // 发送通知
 
     // 重新设置定时器
@@ -153,13 +153,13 @@ int main()
     ubus_add_object(ctx, &gg_obj); // 将 gg 对象添加到 ubus
     ubus_add_object(ctx, &sg_obj); // 将 sg 对象添加到 ubus
 
-    notify_timer.cb = notify_timer_cb;      // 设置定时器回调函数
+    notify_timer.cb = notify_timer_cb;       // 设置定时器回调函数
     uloop_timeout_set(&notify_timer, 10000); // 设置定时器，10 秒后触发
 
     uloop_run(); // 运行事件循环
 
     free_all_resources(); // 释放所有资源
-    uloop_done(); // 清理事件循环
+    uloop_done();         // 清理事件循环
 
     return 0;
 }

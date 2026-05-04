@@ -7,9 +7,9 @@
 #include <string.h>
 #include <unistd.h>
 #include <modbus/modbus.h>
-#include "read_co.h"
-#include "read_volume.h"
-#include "write_register.h"
+#include "read_co/read_co.h"
+#include "read_volume/read_volume.h"
+#include "write_register/write_register.h"
 
 struct ubus_context *ctx; // ubus 上下文对象，用于与 ubus 系统交互
 static struct blob_buf b1; // blob 缓冲区，用于构建消息

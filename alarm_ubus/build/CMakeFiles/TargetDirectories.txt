@@ -1,3 +1,0 @@
-/root/test/alarm_ubus/build/CMakeFiles/rebuild_cache.dir
-/root/test/alarm_ubus/build/CMakeFiles/edit_cache.dir
-/root/test/alarm_ubus/build/CMakeFiles/alarm_ubus.dir

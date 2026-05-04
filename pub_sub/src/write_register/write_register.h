@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <modbus/modbus.h>
 #include <libubox/uloop.h>
-#include "modbus_init.h"
+#include "modbus_init/modbus_init.h"
 
 int write_register();
 

@@ -3,46 +3,18 @@
 #include <libubox/blobmsg_json.h> // 提供 JSON 格式的 blob 消息处理功能
 #include <libubox/uloop.h>        // 提供事件循环功能
 #include <libubus.h>              // 提供 ubus（进程间通信）功能
-
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
 #include <libubox/usock.h>
-
 #include <sys/socket.h>  // 提供 accept(), bind(), listen() 等函数
 #include <unistd.h>      // 提供 read(), write(), close() 等函数
+#include "uci_tcp.h"
 
 static struct ubus_context *ctx;         // ubus 上下文对象，用于与 ubus 系统交互
 static uint32_t obj_id1;                  // ubus 对象 ID
 static uint32_t obj_id2;
 static struct ubus_subscriber sub_event; // ubus 订阅者
-
-struct uloop_fd c_fd;
-
-// 客户端初始化函数：建立TCP连接，并加入uloop事件监听
-int client_init()
-{
-    // 配置socket类型：TCP + 不自动关闭 + 仅IPv4
-    int type = USOCK_TCP | USOCK_NOCLOEXEC | USOCK_IPV4ONLY;
-
-    // 创建TCP客户端socket，连接服务器 192.168.4.94:60000
-    // 返回的文件描述符保存到 c_fd.fd 中
-    c_fd.fd = usock(type, "192.168.4.94", "60000");
-
-    // 判断连接是否失败（fd < 0 表示出错）
-    if (c_fd.fd < 0) 
-    {
-        // 打印错误原因
-        printf("连接失败：%s\n", strerror(errno));
-        return -1; // 返回错误
-    }
-
-    // 将客户端socket加入uloop事件循环，监听可读事件(socket 就是程序用来联网、收发网络数据的工具。)
-    // 当服务器发消息来时，会触发回调函数
-    uloop_fd_add(&c_fd, ULOOP_READ);
-
-    return 0; // 初始化成功
-}
 
 // 回调函数，当收到 ubus 通知时执行
 static int subscriber_cb(struct ubus_context *ctx, struct ubus_object *obj,
@@ -71,9 +43,9 @@ void timer_cb(struct uloop_timeout *timer)
 
 int main()
 {
-    if (client_init() != 0)
+    if (reconnect() != 0)
     {
-        printf("初始化失败\n");
+        printf("连接服务器失败，程序退出\n");
 
         return -1;
     }    
@@ -88,11 +60,11 @@ int main()
     sub_event.cb = subscriber_cb;              // 设置订阅者事件回调函数
     ubus_register_subscriber(ctx, &sub_event); // 注册订阅者
     
-    const char *object1 = "co";              // 要订阅的 ubus 对象名称
+    const char *object1 = "gg";              // 要订阅的 ubus 对象名称
     ubus_lookup_id(ctx, object1, &obj_id1);      // 查找 ubus 对象 ID
     ubus_subscribe(ctx, &sub_event, obj_id1);   // 订阅 ubus 对象
 
-    const char *object2 = "volume";              // 要订阅的 ubus 对象名称
+    const char *object2 = "sg";              // 要订阅的 ubus 对象名称
     ubus_lookup_id(ctx, object2, &obj_id2);      // 查找 ubus 对象 ID
     ubus_subscribe(ctx, &sub_event, obj_id2);   // 订阅 ubus 对象
     
