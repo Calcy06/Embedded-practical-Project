@@ -1,3 +1,4 @@
-/root/zyh/pub_sub/build/CMakeFiles/edit_cache.dir
-/root/zyh/pub_sub/build/CMakeFiles/rebuild_cache.dir
-/root/zyh/pub_sub/build/CMakeFiles/pub.dir
+/root/test/pub_sub/build/CMakeFiles/edit_cache.dir
+/root/test/pub_sub/build/CMakeFiles/sub.dir
+/root/test/pub_sub/build/CMakeFiles/rebuild_cache.dir
+/root/test/pub_sub/build/CMakeFiles/pub.dir

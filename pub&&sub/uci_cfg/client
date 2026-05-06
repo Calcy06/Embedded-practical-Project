@@ -1,3 +1,0 @@
-config client 'demo'
-    option ip "192.168.4.94"
-    option port "60000"

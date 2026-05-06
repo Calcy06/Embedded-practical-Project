@@ -1,7 +1,7 @@
 config sensor
     option slave "1"
-    option name "CO"
+    option name "GUANGGAN"
 
 config sensor
     option slave "2"
-    option name "SGBJQ-1"
+    option name "SHENGGUANG"

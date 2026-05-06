@@ -1,39 +1,38 @@
-cmake_minimum_required(VERSION 3.10)
-project(pub)
+cmake_minimum_required(VERSION 3.5)
+project(pub_sub C)
 
+# 所有头文件目录
 include_directories(
-    src
-    src/read_co
-    src/read_volume
-    src/write_register
-    src/read_uci
+    src/free
     src/modbus_init
+    src/read_gg
+    src/read_sg
+    src/read_uci
+    src/write_register
 )
 
-# 源文件
-set(SOURCES
+# 可执行文件：pub
+add_executable(pub
     src/pub.c
-    src/read_co/read_co.c
-    src/read_volume/read_volume.c
-    src/write_register/write_register.c
-    src/read_uci/read_uci.c
+    src/free/free.c
     src/modbus_init/modbus_init.c
+    src/read_gg/read_gg.c
+    src/read_sg/read_sg.c
+    src/read_uci/read_uci.c
+    src/write_register/write_register.c
 )
 
-# 生成可执行文件
-add_executable(pub ${SOURCES})
-
-set_target_properties(pub PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}
+# 可执行文件：sub
+add_executable(sub
+    src/sub.c
+    src/free/free.c
+    src/modbus_init/modbus_init.c
+    src/read_gg/read_gg.c
+    src/read_sg/read_sg.c
+    src/read_uci/read_uci.c
+    src/write_register/write_register.c
 )
 
-# 链接依赖库
-target_link_libraries(pub
-    modbus
-    uci
-    ubox
-    ubus
-    blobmsg_json
-    pthread
-    m
-)
+# 链接依赖库（ubus/ubox/uci/modbus）
+target_link_libraries(pub PRIVATE ubus ubox uci blobmsg_json modbus)
+target_link_libraries(sub PRIVATE ubus ubox uci blobmsg_json modbus)

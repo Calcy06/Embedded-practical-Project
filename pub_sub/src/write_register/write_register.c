@@ -1,33 +1,25 @@
-#include "write_register/write_register.h"
+#include "write_register.h"
 
-int write_register(int f)
-{   
-    if (f)
+void write_register()
+{
+    for (int i = 0; i < 2; i++)
     {
-        for (int i = 0; i < 2; i++)
+        if (strcmp(arr_sensor[i].sensor_name, "SHENGGUANG") == 0)
         {
-            if(strcmp(rtuctl[i].sensor_name, "SGBJQ-1") == 0)
-            {
-                modbus_write_register(rtuctl[i].ctx, 0x0001, 0x0001);
-                printf("SGBJQ-1的从站地址：%d,", rtuctl[i].slave);
-                printf("chengguo1\n");
+            int res=modbus_write_register(arr_sensor[i].ctx, 0x0001, 0x0001);
+            if(res>0){
+                printf("chenggong\n");
             }
-        }
-        f = 0;
-    }
-    else
-    {
-        for (int i = 0; i < 2; i++)
-        {
-            if(strcmp(rtuctl[i].sensor_name, "SGBJQ-1") == 0)
+            else if(res==-1)
             {
-                modbus_write_register(rtuctl[i].ctx,0x0002, 0x0001);
-                printf("SGBJQ-1的从站地址：%d,", rtuctl[i].slave);
-                printf("chengguo1\n");
-            }
+                printf("shibai\n");
+                printf("失败原因：%s\n", modbus_strerror(errno));
+            }    
+            else
+            {
+                printf("qt\n");
+            }    
+            break;
         }
-        f = 1;
     }
-
-    return f;
 }

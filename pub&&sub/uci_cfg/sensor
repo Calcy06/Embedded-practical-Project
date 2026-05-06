@@ -1,7 +1,0 @@
-config sensor
-    option slave "1"
-    option name "GUANGGAN"
-
-config sensor
-    option slave "2"
-    option name "SHENGGUANG"

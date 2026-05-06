@@ -8,18 +8,20 @@
 #include <stdlib.h>
 #include <libubox/uloop.h>
 
-#define CFG_SENSOR "/root/zyh/pub_sub/uci_cfg/sensor"
-#define CFG_SERIAL "/root/zyh/pub_sub/uci_cfg/serial"
+#define PATH_SENSOR "/root/test/pub_sub/uci_cfg/sensor"
+#define PATH_SERIAL "/root/test/pub_sub/uci_cfg/serial"
 
-struct list_head sensor_list;
+extern struct list_head sensor_list;
 
-struct my_node {
+struct sensor_node
+{
     int slave;
     char *name;
     struct list_head list;
 };
 
-extern char *name;
+extern char *name; // 串口名字
+extern int serial_type;
 extern int speed;
 extern int data_bits;
 extern int stop_bits;

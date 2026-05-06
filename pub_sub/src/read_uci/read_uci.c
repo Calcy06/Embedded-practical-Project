@@ -1,46 +1,60 @@
 #include "read_uci.h"
 
 char *name;
+int serial_type;
 int speed;
 int data_bits;
 int stop_bits;
 char check_bits;
 struct list_head sensor_list;
 
+// 读取传感器配置
 static void read_uci_sensor()
 {
     INIT_LIST_HEAD(&sensor_list);
 
     struct uci_context *ctx = NULL;
     struct uci_package *pkg = NULL;
+    struct uci_section *sec = NULL;
 
     ctx = uci_alloc_context(); // 创建上下文，进行uci配置必要操作
     if (!ctx)
     {
-        printf("shibai\n");
+        printf("read_uci中的ctx创建失败\n");
 
         return;
     }
-    //加载配置文件
-    if (uci_load(ctx, CFG_SENSOR, &pkg) != UCI_OK) 
+    // 加载配置文件
+    if (uci_load(ctx, PATH_SENSOR, &pkg) != UCI_OK) 
     {
         uci_free_context(ctx);
-        printf("sensor\n");
+        printf("read_uci中的sensor配置加载失败\n");
         return;
     }
 
     struct uci_element *ele; // 创建一个链表进行搜寻操作
     uci_foreach_element(&pkg->sections, ele)
     {
-        struct uci_section *sec = uci_to_section(ele);
+        sec = uci_to_section(ele);
         if (strcmp(sec->type, "sensor") == 0)
         {
-            struct my_node *node = malloc(sizeof(*node));
-            const char *s;            
-            s = uci_lookup_option_string(ctx, sec, "slave");
+            // 分配内存
+            struct sensor_node *node = malloc(sizeof(*node));
+            if (node == NULL)
+            {
+                printf("read_uci中的sensor节点内存分配失败\n");
+                return;
+            }
+
+            // 读取数据
+            const char *s = uci_lookup_option_string(ctx, sec, "slave");
+            const char *n = uci_lookup_option_string(ctx, sec, "name");
+
+            // 赋值
             node->slave = s ? atoi(s) : 0;
-            s = uci_lookup_option_string(ctx, sec, "name");
-            node->name = s ? strdup(s) : strdup("noname");
+            node->name = n ? strdup(n) : NULL;
+
+            // 添加到链表
             INIT_LIST_HEAD(&node->list);
             list_add_tail(&node->list, &sensor_list);
         }
@@ -49,48 +63,49 @@ static void read_uci_sensor()
     uci_free_context(ctx);
 }
 
+// 读取串口配置
 static void read_uci_serial()
 {
     struct uci_context *ctx = NULL;
     struct uci_package *pkg = NULL;
+    struct uci_section *sec = NULL;
 
     ctx = uci_alloc_context(); // 创建上下文，进行uci配置必要操作
 
-    //加载配置文件
-    if (uci_load(ctx, CFG_SERIAL, &pkg) != UCI_OK) 
-    {
-        printf("serial\n");
-        uci_free_context(ctx);
-        return;
-    }
+    // 加载配置文件
+    uci_load(ctx, PATH_SERIAL, &pkg);
 
     struct uci_element *ele; // 创建一个链表进行搜寻操作
     uci_foreach_element(&pkg->sections, ele)
     {
-        struct uci_section *sec = uci_to_section(ele);
+        sec = uci_to_section(ele);
         if (strcmp(sec->type, "serial") == 0)
         {
-            const char *s;            
-            s = uci_lookup_option_string(ctx, sec, "name");
-            name = s ? strdup(s) : strdup("noname");
-            s = uci_lookup_option_string(ctx, sec, "speed");
-            speed = s ? atoi(s) : 0;
-            s = uci_lookup_option_string(ctx, sec, "data_bits");
-            data_bits = s ? atoi(s) : 0;
-            s = uci_lookup_option_string(ctx, sec, "stop_bits");
-            stop_bits = s ? atoi(s) : 0;
-            s = uci_lookup_option_string(ctx, sec, "check_bits");
-            check_bits = s ? s[0] : '0';           
+            // 读取数据
+            const char *n = uci_lookup_option_string(ctx, sec, "name");
+            const char *t = uci_lookup_option_string(ctx, sec, "serial_type");
+            const char *s = uci_lookup_option_string(ctx, sec, "speed");
+            const char *d = uci_lookup_option_string(ctx, sec, "data_bits");
+            const char *st = uci_lookup_option_string(ctx, sec, "stop_bits");
+            const char *c = uci_lookup_option_string(ctx, sec, "check_bits");
+
+            // 赋值
+            name = strdup(n ? n : "NoName");
+            serial_type = t ? atoi(t) : 0;
+            speed = s ? atoi(s) : 9600;
+            data_bits = d ? atoi(d) : 8;
+            stop_bits = st ? atoi(st) : 1;
+            check_bits = c ? c[0] : 'N';
         }
-    }   
+    }
     uci_unload(ctx, pkg);
     uci_free_context(ctx);
 }
 
-void read_uci()
-{
-    // 读取传感器的从站地址和名字
-    read_uci_sensor();
-    // 读取总线数据
-    read_uci_serial();
-}
+    void read_uci()
+    {
+        // 读取传感器的从站地址和名字
+        read_uci_sensor();
+        // 读取总线数据
+        read_uci_serial();
+    }

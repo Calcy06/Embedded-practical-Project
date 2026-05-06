@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /root/zyh/pub_sub
+CMAKE_SOURCE_DIR = /root/test/pub_sub
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /root/zyh/pub_sub/build
+CMAKE_BINARY_DIR = /root/test/pub_sub/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/zyh/pub_sub/build/CMakeFiles /root/zyh/pub_sub/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/test/pub_sub/build/CMakeFiles /root/test/pub_sub/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/zyh/pub_sub/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/test/pub_sub/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named sub
+
+# Build rule for target.
+sub: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sub
+.PHONY : sub
+
+# fast build rule for target.
+sub/fast:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/build
+.PHONY : sub/fast
+
+#=============================================================================
 # Target rules for targets named pub
 
 # Build rule for target.
@@ -123,12 +136,43 @@ pub/fast:
 	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/build
 .PHONY : pub/fast
 
+src/free/free.o: src/free/free.c.o
+
+.PHONY : src/free/free.o
+
+# target to build an object file
+src/free/free.c.o:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/free/free.c.o
+	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/free/free.c.o
+.PHONY : src/free/free.c.o
+
+src/free/free.i: src/free/free.c.i
+
+.PHONY : src/free/free.i
+
+# target to preprocess a source file
+src/free/free.c.i:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/free/free.c.i
+	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/free/free.c.i
+.PHONY : src/free/free.c.i
+
+src/free/free.s: src/free/free.c.s
+
+.PHONY : src/free/free.s
+
+# target to generate assembly for a file
+src/free/free.c.s:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/free/free.c.s
+	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/free/free.c.s
+.PHONY : src/free/free.c.s
+
 src/modbus_init/modbus_init.o: src/modbus_init/modbus_init.c.o
 
 .PHONY : src/modbus_init/modbus_init.o
 
 # target to build an object file
 src/modbus_init/modbus_init.c.o:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/modbus_init/modbus_init.c.o
 	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/modbus_init/modbus_init.c.o
 .PHONY : src/modbus_init/modbus_init.c.o
 
@@ -138,6 +182,7 @@ src/modbus_init/modbus_init.i: src/modbus_init/modbus_init.c.i
 
 # target to preprocess a source file
 src/modbus_init/modbus_init.c.i:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/modbus_init/modbus_init.c.i
 	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/modbus_init/modbus_init.c.i
 .PHONY : src/modbus_init/modbus_init.c.i
 
@@ -147,6 +192,7 @@ src/modbus_init/modbus_init.s: src/modbus_init/modbus_init.c.s
 
 # target to generate assembly for a file
 src/modbus_init/modbus_init.c.s:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/modbus_init/modbus_init.c.s
 	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/modbus_init/modbus_init.c.s
 .PHONY : src/modbus_init/modbus_init.c.s
 
@@ -177,32 +223,65 @@ src/pub.c.s:
 	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/pub.c.s
 .PHONY : src/pub.c.s
 
-src/read_co/read_co.o: src/read_co/read_co.c.o
+src/read_gg/read_gg.o: src/read_gg/read_gg.c.o
 
-.PHONY : src/read_co/read_co.o
+.PHONY : src/read_gg/read_gg.o
 
 # target to build an object file
-src/read_co/read_co.c.o:
-	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/read_co/read_co.c.o
-.PHONY : src/read_co/read_co.c.o
+src/read_gg/read_gg.c.o:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/read_gg/read_gg.c.o
+	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/read_gg/read_gg.c.o
+.PHONY : src/read_gg/read_gg.c.o
 
-src/read_co/read_co.i: src/read_co/read_co.c.i
+src/read_gg/read_gg.i: src/read_gg/read_gg.c.i
 
-.PHONY : src/read_co/read_co.i
+.PHONY : src/read_gg/read_gg.i
 
 # target to preprocess a source file
-src/read_co/read_co.c.i:
-	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/read_co/read_co.c.i
-.PHONY : src/read_co/read_co.c.i
+src/read_gg/read_gg.c.i:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/read_gg/read_gg.c.i
+	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/read_gg/read_gg.c.i
+.PHONY : src/read_gg/read_gg.c.i
 
-src/read_co/read_co.s: src/read_co/read_co.c.s
+src/read_gg/read_gg.s: src/read_gg/read_gg.c.s
 
-.PHONY : src/read_co/read_co.s
+.PHONY : src/read_gg/read_gg.s
 
 # target to generate assembly for a file
-src/read_co/read_co.c.s:
-	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/read_co/read_co.c.s
-.PHONY : src/read_co/read_co.c.s
+src/read_gg/read_gg.c.s:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/read_gg/read_gg.c.s
+	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/read_gg/read_gg.c.s
+.PHONY : src/read_gg/read_gg.c.s
+
+src/read_sg/read_sg.o: src/read_sg/read_sg.c.o
+
+.PHONY : src/read_sg/read_sg.o
+
+# target to build an object file
+src/read_sg/read_sg.c.o:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/read_sg/read_sg.c.o
+	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/read_sg/read_sg.c.o
+.PHONY : src/read_sg/read_sg.c.o
+
+src/read_sg/read_sg.i: src/read_sg/read_sg.c.i
+
+.PHONY : src/read_sg/read_sg.i
+
+# target to preprocess a source file
+src/read_sg/read_sg.c.i:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/read_sg/read_sg.c.i
+	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/read_sg/read_sg.c.i
+.PHONY : src/read_sg/read_sg.c.i
+
+src/read_sg/read_sg.s: src/read_sg/read_sg.c.s
+
+.PHONY : src/read_sg/read_sg.s
+
+# target to generate assembly for a file
+src/read_sg/read_sg.c.s:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/read_sg/read_sg.c.s
+	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/read_sg/read_sg.c.s
+.PHONY : src/read_sg/read_sg.c.s
 
 src/read_uci/read_uci.o: src/read_uci/read_uci.c.o
 
@@ -210,6 +289,7 @@ src/read_uci/read_uci.o: src/read_uci/read_uci.c.o
 
 # target to build an object file
 src/read_uci/read_uci.c.o:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/read_uci/read_uci.c.o
 	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/read_uci/read_uci.c.o
 .PHONY : src/read_uci/read_uci.c.o
 
@@ -219,6 +299,7 @@ src/read_uci/read_uci.i: src/read_uci/read_uci.c.i
 
 # target to preprocess a source file
 src/read_uci/read_uci.c.i:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/read_uci/read_uci.c.i
 	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/read_uci/read_uci.c.i
 .PHONY : src/read_uci/read_uci.c.i
 
@@ -228,35 +309,36 @@ src/read_uci/read_uci.s: src/read_uci/read_uci.c.s
 
 # target to generate assembly for a file
 src/read_uci/read_uci.c.s:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/read_uci/read_uci.c.s
 	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/read_uci/read_uci.c.s
 .PHONY : src/read_uci/read_uci.c.s
 
-src/read_volume/read_volume.o: src/read_volume/read_volume.c.o
+src/sub.o: src/sub.c.o
 
-.PHONY : src/read_volume/read_volume.o
+.PHONY : src/sub.o
 
 # target to build an object file
-src/read_volume/read_volume.c.o:
-	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/read_volume/read_volume.c.o
-.PHONY : src/read_volume/read_volume.c.o
+src/sub.c.o:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/sub.c.o
+.PHONY : src/sub.c.o
 
-src/read_volume/read_volume.i: src/read_volume/read_volume.c.i
+src/sub.i: src/sub.c.i
 
-.PHONY : src/read_volume/read_volume.i
+.PHONY : src/sub.i
 
 # target to preprocess a source file
-src/read_volume/read_volume.c.i:
-	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/read_volume/read_volume.c.i
-.PHONY : src/read_volume/read_volume.c.i
+src/sub.c.i:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/sub.c.i
+.PHONY : src/sub.c.i
 
-src/read_volume/read_volume.s: src/read_volume/read_volume.c.s
+src/sub.s: src/sub.c.s
 
-.PHONY : src/read_volume/read_volume.s
+.PHONY : src/sub.s
 
 # target to generate assembly for a file
-src/read_volume/read_volume.c.s:
-	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/read_volume/read_volume.c.s
-.PHONY : src/read_volume/read_volume.c.s
+src/sub.c.s:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/sub.c.s
+.PHONY : src/sub.c.s
 
 src/write_register/write_register.o: src/write_register/write_register.c.o
 
@@ -264,6 +346,7 @@ src/write_register/write_register.o: src/write_register/write_register.c.o
 
 # target to build an object file
 src/write_register/write_register.c.o:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/write_register/write_register.c.o
 	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/write_register/write_register.c.o
 .PHONY : src/write_register/write_register.c.o
 
@@ -273,6 +356,7 @@ src/write_register/write_register.i: src/write_register/write_register.c.i
 
 # target to preprocess a source file
 src/write_register/write_register.c.i:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/write_register/write_register.c.i
 	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/write_register/write_register.c.i
 .PHONY : src/write_register/write_register.c.i
 
@@ -282,6 +366,7 @@ src/write_register/write_register.s: src/write_register/write_register.c.s
 
 # target to generate assembly for a file
 src/write_register/write_register.c.s:
+	$(MAKE) -f CMakeFiles/sub.dir/build.make CMakeFiles/sub.dir/src/write_register/write_register.c.s
 	$(MAKE) -f CMakeFiles/pub.dir/build.make CMakeFiles/pub.dir/src/write_register/write_register.c.s
 .PHONY : src/write_register/write_register.c.s
 
@@ -292,23 +377,30 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... sub"
 	@echo "... rebuild_cache"
 	@echo "... pub"
+	@echo "... src/free/free.o"
+	@echo "... src/free/free.i"
+	@echo "... src/free/free.s"
 	@echo "... src/modbus_init/modbus_init.o"
 	@echo "... src/modbus_init/modbus_init.i"
 	@echo "... src/modbus_init/modbus_init.s"
 	@echo "... src/pub.o"
 	@echo "... src/pub.i"
 	@echo "... src/pub.s"
-	@echo "... src/read_co/read_co.o"
-	@echo "... src/read_co/read_co.i"
-	@echo "... src/read_co/read_co.s"
+	@echo "... src/read_gg/read_gg.o"
+	@echo "... src/read_gg/read_gg.i"
+	@echo "... src/read_gg/read_gg.s"
+	@echo "... src/read_sg/read_sg.o"
+	@echo "... src/read_sg/read_sg.i"
+	@echo "... src/read_sg/read_sg.s"
 	@echo "... src/read_uci/read_uci.o"
 	@echo "... src/read_uci/read_uci.i"
 	@echo "... src/read_uci/read_uci.s"
-	@echo "... src/read_volume/read_volume.o"
-	@echo "... src/read_volume/read_volume.i"
-	@echo "... src/read_volume/read_volume.s"
+	@echo "... src/sub.o"
+	@echo "... src/sub.i"
+	@echo "... src/sub.s"
 	@echo "... src/write_register/write_register.o"
 	@echo "... src/write_register/write_register.i"
 	@echo "... src/write_register/write_register.s"

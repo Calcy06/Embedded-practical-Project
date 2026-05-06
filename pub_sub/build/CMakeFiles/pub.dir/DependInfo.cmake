@@ -4,23 +4,24 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/root/zyh/pub_sub/src/modbus_init/modbus_init.c" "/root/zyh/pub_sub/build/CMakeFiles/pub.dir/src/modbus_init/modbus_init.c.o"
-  "/root/zyh/pub_sub/src/pub.c" "/root/zyh/pub_sub/build/CMakeFiles/pub.dir/src/pub.c.o"
-  "/root/zyh/pub_sub/src/read_co/read_co.c" "/root/zyh/pub_sub/build/CMakeFiles/pub.dir/src/read_co/read_co.c.o"
-  "/root/zyh/pub_sub/src/read_uci/read_uci.c" "/root/zyh/pub_sub/build/CMakeFiles/pub.dir/src/read_uci/read_uci.c.o"
-  "/root/zyh/pub_sub/src/read_volume/read_volume.c" "/root/zyh/pub_sub/build/CMakeFiles/pub.dir/src/read_volume/read_volume.c.o"
-  "/root/zyh/pub_sub/src/write_register/write_register.c" "/root/zyh/pub_sub/build/CMakeFiles/pub.dir/src/write_register/write_register.c.o"
+  "/root/test/pub_sub/src/free/free.c" "/root/test/pub_sub/build/CMakeFiles/pub.dir/src/free/free.c.o"
+  "/root/test/pub_sub/src/modbus_init/modbus_init.c" "/root/test/pub_sub/build/CMakeFiles/pub.dir/src/modbus_init/modbus_init.c.o"
+  "/root/test/pub_sub/src/pub.c" "/root/test/pub_sub/build/CMakeFiles/pub.dir/src/pub.c.o"
+  "/root/test/pub_sub/src/read_gg/read_gg.c" "/root/test/pub_sub/build/CMakeFiles/pub.dir/src/read_gg/read_gg.c.o"
+  "/root/test/pub_sub/src/read_sg/read_sg.c" "/root/test/pub_sub/build/CMakeFiles/pub.dir/src/read_sg/read_sg.c.o"
+  "/root/test/pub_sub/src/read_uci/read_uci.c" "/root/test/pub_sub/build/CMakeFiles/pub.dir/src/read_uci/read_uci.c.o"
+  "/root/test/pub_sub/src/write_register/write_register.c" "/root/test/pub_sub/build/CMakeFiles/pub.dir/src/write_register/write_register.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_C_TARGET_INCLUDE_PATH
-  "../src"
-  "../src/read_co"
-  "../src/read_volume"
-  "../src/write_register"
-  "../src/read_uci"
+  "../src/free"
   "../src/modbus_init"
+  "../src/read_gg"
+  "../src/read_sg"
+  "../src/read_uci"
+  "../src/write_register"
   )
 
 # Targets to which this target links.
