@@ -1,7 +1,14 @@
 config sensor
     option slave "1"
     option name "GUANGGAN"
+    option write_addr "0"
+    option write_addr "0"
+
 
 config sensor
     option slave "2"
     option name "SHENGGUANG"
+    option read_addr "1"
+    option read_num  "2"
+    option write_addr "1"
+    option write_addr "2"

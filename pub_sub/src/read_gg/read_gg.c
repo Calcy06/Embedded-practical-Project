@@ -15,7 +15,7 @@ int read_gg()
             // 参数2：起始寄存器地址（0x01）
             // 参数3：读取寄存器的数量（0x01）
             // 参数4：用于存储读取数据的缓冲区（buf1）
-            regs = modbus_read_registers(arr_sensor[i].ctx, 0x0007, 2, &buf);
+            regs = modbus_read_registers(arr_sensor[i].ctx, 7, 1, &buf);
             printf("gg的从站是: %d\n", arr_sensor[i].slave);
             if (regs == -1)
             {
