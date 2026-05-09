@@ -1,0 +1,381 @@
+# 伟思水务 数字水位计 WFX-40 
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'1'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'WFX-40'  #传感器编码
+ 	list   func_mes '3.0.1.WFX_40'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+
+# 建大仁科 三插针土壤水分电导率 RS-ECH-NO1-TR-1
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'12'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'RS-ECH-NO1-TR-1'  #传感器编码
+ 	list   func_mes '3.0.5.JDRK_ECH'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+
+# 宏志  脉冲频率计数采集模块  FT-PFC-04
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'11'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'FT-PFC-04'  #传感器编码
+ 	list   func_mes '3.96.12.HZ_PFC'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+
+# 建大仁科 二氧化碳温湿度变送器 RS-WS-NO1-2
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'3'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'RS-CO2WS-NO1-2'  #传感器编码
+ 	list   func_mes '3.0.3.JDRK_CO2WS'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+
+# 建大仁科 光强度传感器  RS-GZ-GZ-N01-2
+config modbus_rtu
+	option serial 'ttyXRUSB2'
+	option slave '2'
+	option r_enable '1'
+	option period '2'
+	option sensor_code 'RS-GZ-NO1-2'
+	list func_mes '3.2.4.JDRK_GZ'
+	
+# 建大仁科 振弦式传感器采集器  RS-ZXCJ-DY-N01-3
+  config modbus_rtu 
+  	option serial		'ttyXRUSB2'        #占用串口
+  	option slave		'6'            #从机地址
+  	option r_enable		'1'            #读使能
+  	option period       '5'			   #采集周期
+  	option sensor_code		'RS-ZXCJ-DY-N01-3'  #传感器编码
+  	list   func_mes '3.0.6.JDRK_ZXCJ'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+
+ # 建大仁科 一体式EC变送器 RS-EC-N01-3-10
+  config modbus_rtu 
+  	option serial		'ttyXRUSB2'        #占用串口
+  	option slave		'2'            #从机地址
+  	option r_enable		'1'            #读使能
+  	option period       '5'			   #采集周期
+  	option sensor_code		'RS-EC-N01-3-10'  #传感器编码
+  	list   func_mes '3.0.4.JDRK_EC'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+# 建大仁科 一体式PH变送器 RS-PH-N01-3-201T 
+  config modbus_rtu 
+  	option serial		'ttyXRUSB2'        #占用串口
+  	option slave		'1'            #从机地址
+  	option r_enable		'1'            #读使能
+  	option period       '5'			   #采集周期
+  	option sensor_code		'RS-PH-N01-3-201T'  #传感器编码
+  	list   func_mes '3.0.2.JDRK_PH2'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+# 建大仁科 一体式氨氮变送器变送器 RS-NHN-N01-4-100
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'5'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'RS-NHN-N01-4-100'  #传感器编码
+ 	list   func_mes '3.0.3.JDRK_NHN'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+# 建大仁科 浊度变送器  RS-ZD-N01-1-4000
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'4'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'RS-ZD-N01-1-4000'  #传感器编码
+ 	list   func_mes '3.0.2.JDRK_ZD'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+
+# 建大仁科 荧光法溶解氧变送器 RS-LDO-NO1-2-20
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'3'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'RS-LDO-NO1-2-20'  #传感器编码
+ 	list   func_mes '3.0.6.JDRK_LDO'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+
+# 建大仁科 温度变送器 RS-WD-NO1-2
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'6'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'RS-WD-NO1-2'  #传感器编码
+ 	list   func_mes '3.1.1.JDRK_WD'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+
+# 建大仁科 温湿度变送器 RS-WS-NO1-2
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'1'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'RS-WS-NO1-2'  #传感器编码
+ 	list   func_mes '3.0.2.JDRK_WS'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+
+# 建大仁科 大气压力变送器 	RS-QY-NO1-2-4
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'7'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'RS-QY-NO1-2-4'  #传感器编码
+ 	list   func_mes '3.0.2.JDRK_QY'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+# 建大仁科 三插针土壤温度水分 RS-WS-N01-TR-1
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'3'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'RS-WS-N01-TR-1'  #传感器编码
+ 	list   func_mes '3.0.2.JDRK_TRWS'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+# 建大仁科 两插针土壤PH RS-PH-N01-TR-1
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'2'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'RS-PH-N01-TR-1'  #传感器编码
+ 	list   func_mes '3.0.1.JDRK_PH'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+# 建大仁科 倾角变送器 RS-DIP-N01-1
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'5'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'RS-DIP-N01-1'  #传感器编码
+ 	list   func_mes '3.0.3.JDRK_DIP'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+#建大仁科 超声波风速风向传感器  RS-CFSFX-N01-2H
+config modbus_rtu 
+	option serial		'ttyXRUSB2'        #占用串口
+	option slave		'3'            #从机地址
+	option r_enable		'1'            #读使能
+	option period       '5'			   #采集周期
+	option sensor_code		'RS-CFSFX-N01-2H'  #传感器编码
+	list   func_mes '3.0.4.JDRK_CFSFX'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法    
+
+#建大仁科 风速变送器 RS-FSJT-N01
+config modbus_rtu 
+	option serial		'ttyXRUSB2'        #占用串口
+	option slave		'8'            #从机地址
+	option r_enable		'1'            #读使能
+	option period       '15'			   #采集周期
+	option sensor_code		'RS-FSJT-N01'  #传感器编码
+	list   func_mes '3.0.2.JDRK_FSJT'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+#建大仁科 光强度传感器 RS-GZ-GZ-N02
+config modbus_rtu
+        option serial 'ttyXRUSB2'
+        option slave '2'
+        option r_enable '1'
+        option period '2'
+        option sensor_code 'RS-GZ-NO1-2'
+        list func_mes '3.2.4.JDRK_GZ'
+
+
+#建大仁科倾角变送器
+config modbus_rtu 
+	option serial		'ttyXRUSB2'        #占用串口
+	option slave		'1'            #从机地址
+	option r_enable		'1'            #读使能
+	option period       '300'			   #采集周期
+	option sensor_code		'ANGLE'  #传感器编码
+	list   func_mes '3.0.3.angle'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法 
+
+
+#汇控485继电器模块
+config modbus_rtu 
+	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'1'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '20'			   #采集周期
+ 	option sensor_code		'HKDZ-JDQ-1'  #传感器编码
+ 	list   func_mes '1.0.8.HK_RALYCtl'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法
+
+
+#水压
+config modbus_rtu 
+       option serial 'ttyXRUSB2'
+       option r_enable '1'
+       option slave '2'
+       option sensor_code 'RK-PM300-2'
+       option period '300'
+       list func_mes '3.4.1.JDRK_PM300'
+
+#土壤PH变送器
+config modbus_rtu 
+       option serial 'ttyXRUSB2'
+       option r_enable '1'
+       option slave '1'
+       option sensor_code 'RK-PH-1'
+       option period '300'
+       list func_mes '3.0.1.SoilPh'
+
+#土壤水位变送器
+config modbus_rtu 
+       option serial 'ttyXRUSB2'
+       option r_enable '1'
+       option slave '4'
+       option sensor_code 'RK-WS-1'
+       option period '300'
+       list func_mes '3.0.2.SoilHumTem'
+
+
+#液位变送器
+config modbus_rtu 
+       option serial 'ttyXRUSB2'
+       option r_enable '1'
+       option slave '5'
+       option sensor_code 'RK-PM200-1'
+       option period '300'
+       list func_mes '3.4.1.LiquidLevel'
+
+#建大仁科倾角变送器
+config modbus_rtu 
+	option serial		'ttyXRUSB2'        #占用串口
+	option slave		'1'            #从机地址
+	option r_enable		'1'            #读使能
+	option period       '300'			   #采集周期
+	option sensor_code		'ANGLE'  #传感器编码
+	list   func_mes '3.0.3.angle'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法
+
+#建大仁科 水浸变送器
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'1'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '3'			   #采集周期
+ 	option sensor_code		'RS-SJ-NO1-2'  #传感器编码
+ 	list   func_mes '3.0.1.JDRK_SJN01'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+#红斯迈RS485智能无线广角人体红外线探头
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'1'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '3'			   #采集周期
+ 	option sensor_code		'HSM_400S_485'  #传感器编码
+ 	list   func_mes '3.1.1.HSM_400S_485'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法  
+#红斯迈门磁开关
+ config modbus_rtu 
+ 	option serial		'ttyS1'        #占用串口
+ 	option slave		'1'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '1'			   #采集周期
+ 	option sensor_code		'HSM_MC18_RS485 '  #传感器编码
+ 	list   func_mes '3.1.1.HSM_MC18_RS485'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+# 威盟士空气质量传感器
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'1'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '3'			   #采集周期
+ 	option sensor_code		'SN_3002_PM_N01'  #传感器编码
+ 	list   func_mes '3.0.3.SN_3002_PM_N01'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+# 精迅畅通光照传感器
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'1'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '3'			   #采集周期
+ 	option sensor_code		'JXBS_3001_GZ'  #传感器编码
+ 	list   func_mes '3.7.2.JXBS_3001_GZ'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法  
+
+# 精迅畅通烟雾探测器
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'1'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '3'			   #采集周期
+ 	option sensor_code		'JXBS_3001_YG '  #传感器编码
+ 	list   func_mes '3.16.1.JXBS_3001_YG'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+# 兆泰盛甲烷传感器
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'1'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '1'			   #采集周期
+ 	option sensor_code		'ZTS_3002_CH4_N01 '  #传感器编码
+ 	list   func_mes '3.2.1.ZTS_3002_CH4_N01'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+#兆泰盛 一氧化碳温湿度传感器
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'1'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '1'			   #采集周期
+ 	option sensor_code		'ZTS_3002_COWS_N01 '  #传感器编码
+ 	list   func_mes '3.0.3.ZTS_3002_COWS_N01'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+# 泽泰人体存在传感器
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'1'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '1'			   #采集周期
+ 	option sensor_code		'ZT_CZSXD034_485 '  #传感器编码
+ 	list   func_mes '3.7.1.ZT_CZSXD034_485'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+#万图思睿温湿度传感器
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'1'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '1'			   #采集周期
+ 	option sensor_code		'SD123_ST01_LC '  #传感器编码
+ 	list   func_mes '3.512.2.SD123_ST01_LC'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法
+
+# 建大仁科  风向变送器 RS-FXJT-NO1-360
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'12'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'RS-FXJT-1'  #传感器编码
+ 	list   func_mes '3.0.2.JDRK_FXJT'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+# 建大仁科 翻斗式雨量 RS-YLS-N01-2
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'1'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'JR-YL-1'  #传感器编码
+ 	list   func_mes '3.0.1.JR_YL'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法
+
+
+# 18B20数据读取
+config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'1'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'KLT_RS485_18B20'  #传感器编码
+ 	list   func_mes '3.0.1.KLT_RS485_18B20'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法
+
+#稳控振弦采集模块采集温度和频率
+ config modbus_rtu 
+ 	option serial		'ttyS0'        #占用串口
+ 	option slave		'1'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'WK-JX'  #传感器编码
+ 	list func_mes '3.35.1.WK_RS485_HZ'     #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+    list func_mes '3.41.1.WK_RS485_T'	 #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法
