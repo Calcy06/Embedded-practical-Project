@@ -20,7 +20,6 @@ typedef struct modbus_serial_s
     int data_bits;              // 数据位（8）
     int stop_bits;              // 停止位（1）
     char check_bits[2];         // 校验位（N无/E偶/O奇）
-    int port;                   // 端口号
     modbus_t *ctx;              // 【第三方库】Modbus上下文（串口句柄）
 } modbus_serial_t;
 
