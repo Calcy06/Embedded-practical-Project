@@ -1,0 +1,17 @@
+config serial 
+	option busname 'ttyXRUSB2'
+	option enable		'1'
+	option serial_type	'2'
+	option speed 		'38400'
+	option data_bits	'8'
+	option stop_bits	'1'
+	option check_bits	'N'
+
+config serial 
+	option busname 'ttyS0'
+	option enable		'1'
+	option serial_type	'2'
+	option speed 		'9600'
+	option data_bits	'8'
+	option stop_bits	'1'
+	option check_bits	'N'

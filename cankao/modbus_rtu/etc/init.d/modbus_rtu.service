@@ -1,0 +1,9 @@
+[Unit]
+Description=modbus_rtu
+
+[Service]
+ExecStart=/usr/local/sbin/modbus_rtu
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

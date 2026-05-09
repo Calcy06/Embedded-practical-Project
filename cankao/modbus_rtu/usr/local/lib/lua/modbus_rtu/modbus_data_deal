@@ -1,0 +1,623 @@
+----------------------------------------------------------------------------------
+--函数命名规则：厂家+传感器说明 eg: JDRK_FSJT(建大仁科 风速变送器 型号:RS-FSJT-N01) 
+--函数名称长度不超32个字节
+--采集传感器寄存器数量不超过15个
+----------------------------------------------------------------------------------
+
+--iee754 lua计算方法
+function iee754_hexToFloat(hexNums)
+    local sign = math.modf(hexNums/(2^31))
+    local exponent = math.modf(hexNums%(2^31)/(2^23))-127
+    local mantissa = hexNums%(2^23)
+    for i=1,23 do mantissa=mantissa/2 end
+    return (-1)^sign * (1+mantissa) * 2^exponent
+end
+
+-- 识别十六进制数
+function u16_int16(u16_num1)
+	if (u16_num1 >= 32768) then
+	   result = u16_num1 - 65536
+	else
+	   result = u16_num1
+	end
+ 
+	return result
+ end
+
+-- 倾角传感器解析函数
+function angle(params)
+	local x ,y,z
+	local cjson = require "cjson"
+    local table_len = #params   --获取表长度
+	--print("table size: ", table_len)    --打印表长度
+	-- print("table text: ", params.text) 
+	x = u16_int16(params[1])/100
+	y = u16_int16(params[2])/100
+	z = u16_int16(params[3])/100
+	-- 临时处理数据方法，保留整数
+	x = x- x%1
+	y = y- y%1
+	z = z- z%1
+
+	local data_tojson = {X=x,Y=y,Z=z}
+	local jsondata = cjson.encode(data_tojson)
+	--print(jsondata)
+
+
+	-- for k, v in pairs(params) do  --打印表中的元素
+	-- 	print(v/100)
+	-- end
+	
+	--return table_len,x,y,z  --返回表长度 及数据
+    -- params.text = os.date('%Y-%m-%d %H:%M:%S') .. ": " .. params.text
+     return jsondata
+end
+
+-- 压力变送器 	RK-PM300-1
+-- function JDRK_PM300(params)
+-- 	local water_pressure
+-- 	local cjson = require "cjson"
+
+-- 	water_pressure = u16_int16(params[1])/10
+-- 	local data_tojson = {WaterPressure=water_pressure}
+-- 	local jsondata = cjson.encode(data_tojson)
+
+--      return jsondata
+-- end
+
+-- 土壤温度水分变送器 建大仁科 RS-WS-N01-TR-1
+-- function SoilHumTem(params)
+-- 	local humidity
+-- 	local temperature
+-- 	local cjson = require "cjson"
+
+-- 	humidity = u16_int16(params[1])/10
+-- 	temperature = u16_int16(params[2])/10
+-- 	local data_tojson = {Humidity=humidity,Temperature=temperature}
+-- 	local jsondata = cjson.encode(data_tojson)
+-- 	return jsondata
+-- end
+
+-- 两插针土壤PH 建大仁科 RS-WS-N01-TR-1
+-- function SoilPh(params)
+-- 	local ph
+-- 	local cjson = require "cjson"
+
+-- 	ph = u16_int16(params[1])/10
+-- 	local data_tojson = {PH=ph}
+-- 	local jsondata = cjson.encode(data_tojson)
+-- 	return jsondata
+-- end
+
+
+--投入式液位变送器
+function LiquidLevel(params)
+	local liquidlevel
+	local cjson = require "cjson"
+
+	liquidlevel = u16_int16(params[1])
+	local data_tojson = {LiquidLevel=liquidlevel}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+
+--汇控485继电器模块
+function HK_RALYCtl(params)
+	local cjson = require "cjson"
+	local bits  = {}
+
+	-- for i = 1, #params do
+	-- 	print("索引", i, "值", params[i])
+	-- end
+	bits[1] = params[1] % 256
+	bits[2] = math.floor(params[1] / 256)
+	bits[3] = params[2] % 256
+	bits[4] = math.floor(params[2] / 256)
+	bits[5] = params[3] % 256
+	bits[6] = math.floor(params[3] / 256)
+	bits[7] = params[4] % 256
+	bits[8] = math.floor(params[4] / 256)
+
+	local com_data = {}
+	for idx  = 1 ,#bits ,1 do
+		com_data["COM-" .. idx] = bits[idx]  -- 值按 1,2,3,... 递增
+	end
+
+	local jsondata = cjson.encode(com_data)
+
+	return jsondata
+end
+
+-- 建大仁科 风速变送器 RS-FSJT-N01
+function JDRK_FSJT(params)
+	local cjson = require "cjson"
+	local windspeed
+	local windlevel
+	
+	windspeed = u16_int16(params[1])/10
+	windlevel = u16_int16(params[2])
+	
+	local data_tojson = {WindSpeed=windspeed,WindLevel=windlevel}
+	local jsondata = cjson.encode(data_tojson)
+
+	return jsondata
+end
+
+-- 建大仁科 超声波风速风向传感器  RS-CFSFX-N01-2H
+function JDRK_CFSFX(params)
+	local cjson = require "cjson"
+	local windspeed
+	local winddirection
+	local maxspeed
+	local windlevel
+	
+	windspeed     = u16_int16(params[1])/100
+	winddirection = u16_int16(params[2])
+	maxspeed	  = u16_int16(params[3])/100
+	windlevel     = u16_int16(params[4])
+
+	local data_tojson = {WindSpeed=windspeed,WindDirection=winddirection,MaxSpeed=maxspeed,WindLevel=windlevel}
+	local jsondata = cjson.encode(data_tojson)
+	
+	return jsondata
+end
+
+-- 建大仁科 倾角变送器 RS-DIP-N01-1
+function JDRK_DIP(params)
+	local x ,y,z
+	local cjson = require "cjson"
+    local table_len = #params   --获取表长度
+	
+	x = u16_int16(params[1])/100
+	y = u16_int16(params[2])/100
+	z = u16_int16(params[3])/100
+	
+	x = x- x%1
+	y = y- y%1
+	z = z- z%1
+
+	local data_tojson = {X=x,Y=y,Z=z}
+	local jsondata = cjson.encode(data_tojson)
+
+     return jsondata
+end
+
+--建大仁科 两插针土壤PH RS-PH-N01-TR-1
+function JDRK_PH(params)
+	local ph
+	local cjson = require "cjson"
+
+	ph = u16_int16(params[1])/10
+	local data_tojson = {PH=ph}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+--建大仁科 三插针土壤温度水分 RS-WS-N01-TR-1
+function JDRK_TRWS(params)
+	local cjson = require "cjson"
+	local moisture
+	local temperature
+
+	moisture = u16_int16(params[1])/10
+	temperature = u16_int16(params[2])/10
+	local data_tojson = {Moisture =moisture,Temperature=temperature}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+
+--建大仁科 温湿度变送器 RS-WS-NO1-2
+function JDRK_WS(params)
+	local cjson = require "cjson"
+	local humidity
+	local temperature
+
+	humidity = u16_int16(params[1])/10
+	temperature = u16_int16(params[2])/10
+	local data_tojson = {Humidity=humidity,Temperature=temperature}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+-- 建大仁科 大气压力变送器 	RS-QY-NO1-2-4
+function JDRK_QY(params)
+	local cjson = require "cjson"
+	local atmospheric_pressure
+	local temperature
+
+	atmospheric_pressure = u16_int16(params[1])/10
+	temperature = u16_int16(params[2])/10
+	local data_tojson = {Atmospheric_pressure=atmospheric_pressure,Temperature=temperature}
+	local jsondata = cjson.encode(data_tojson)
+
+     return jsondata
+end
+
+-- 建大仁科 温度变送器 RS-WD-NO1-2
+function JDRK_WD(params)
+	local cjson = require "cjson"
+	local temperature
+
+	temperature = u16_int16(params[1])/10
+	local data_tojson = {Temperature=temperature}
+	local jsondata = cjson.encode(data_tojson)
+
+     return jsondata
+end
+
+
+-- 建大仁科 荧光法溶解氧变送器 RS-LDO-NO1-2-20
+function JDRK_LDO(params)
+	local cjson = require "cjson"
+
+
+	-- 溶解氧饱和度 （合并两个4字节十六进制数）
+	local DOS = (params[1] * 2^16) + params[2] 
+	-- 溶解氧浓度   （合并两个4字节十六进制数）
+	local DOC = (params[3] * 2^16) + params[4] 
+	-- 温度  	    （合并两个4字节十六进制数）
+	local TEM = (params[5] * 2^16) + params[6] 
+
+	DOS  = string.format("%.3f", iee754_hexToFloat(DOS))
+	-- print("dos",DOS)
+	DOC = string.format("%.3f", iee754_hexToFloat(DOC))
+	-- print("doc",DOC)
+	TEM = string.format("%.3f", iee754_hexToFloat(TEM))
+	-- print("temp",TEM)
+
+	local data_tojson = {Dos=DOS,Doc=DOC,Tem=TEM}
+	local jsondata = cjson.encode(data_tojson)
+
+     return jsondata
+end
+
+-- 建大仁科 浊度变送器  RS-ZD-N01-1-4000
+function JDRK_ZD(params)
+	local cjson = require "cjson"
+	local turbidity
+	local temperature
+
+	turbidity = params[1]/10
+	temperature = u16_int16(params[2])/10
+	local data_tojson = {Temperature=temperature,Turbidity=turbidity}
+	local jsondata = cjson.encode(data_tojson)
+
+     return jsondata
+end
+
+-- 建大仁科 一体式氨氮变送器变送器 RS-NHN-N01-4-100
+function JDRK_NHN(params)
+	local cjson = require "cjson"
+	local ammonia
+	local ph
+	local temperature
+
+	ammonia = params[1]/100
+	ph = params[2]/100
+	temperature = u16_int16(params[3])/10
+	local data_tojson = {Temperature=temperature,PH=ph,Ammonia=ammonia}
+	local jsondata = cjson.encode(data_tojson)
+
+     return jsondata
+end
+
+-- 建大仁科 一体式PH变送器 RS-PH-N01-3-201T
+function JDRK_PH2(params)
+	local cjson = require "cjson"
+	local ph
+	local temperature
+
+	ph = params[1]/100
+	temperature = u16_int16(params[2])/10
+	local data_tojson = {Temperature=temperature,PH=ph}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+-- 建大仁科 一体式EC变送器 RS-EC-N01-3-10
+function JDRK_EC(params)
+	local cjson = require "cjson"
+	local electrical
+	local temperature
+	local salinity
+	local tds
+
+	electrical = params[1]
+	temperature = u16_int16(params[2])/10
+	salinity = params[2]
+	tds = params[3]
+	local data_tojson = {Temperature=temperature,Electrical=electrical,Salinity=salinity,TDS=tds}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+-- 建大仁科 振弦式传感器采集器  RS-ZXCJ-DY-N01-3
+function JDRK_ZXCJ(params)
+	local cjson = require "cjson"
+	local temperature
+	local physical
+	local frequency
+
+	-- temperature = (params[1] * 2^16) + params[2] 
+	physical = (params[3] * 2^16) + params[4] 
+	frequency = (params[5] * 2^16) + params[6] 
+
+	-- temperature  = string.format("%.3f", temperature)
+	physical = string.format("%.3f", iee754_hexToFloat(physical))
+	frequency = string.format("%.3f", iee754_hexToFloat(frequency))
+
+	local data_tojson = {Physical=physical,Frequency=frequency}
+	local jsondata = cjson.encode(data_tojson)
+
+     return jsondata
+end
+
+-- 建大仁科 光强度传感器  RS-GZ-GZ-N01-2
+function JDRK_GZ(params)
+	local cjson = require "cjson"
+	local LUX
+
+	LUX = (params[1] * 2^16) + params[2] 
+	LUX  = string.format("%.3f", LUX)
+	local data_tojson = {Lux=LUX}
+	local jsondata = cjson.encode(data_tojson)
+
+    return jsondata
+end
+
+-- 建大仁科 二氧化碳温湿度变送器 RS-WS-NO1-2
+function JDRK_CO2WS(params)
+	local cjson = require "cjson"
+	local humidity
+	local temperature
+	local co2
+
+	humidity = params[1]/10
+	temperature = u16_int16(params[2])/10
+	co2 = params[3]
+	local data_tojson = {Humidity=humidity,Temperature=temperature,CO2=co2}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+function HZ_PFC(params)
+	local cjson = require "cjson"
+	local pulse1
+	local frequency1
+	local pulse2
+	local frequency2
+	local pulse3
+	local frequency3
+	local pulse4
+	local frequency4
+
+	pulse1 = (params[1] * 2^16) + params[2] 
+	frequency1 = params[3] 
+	pulse2 = (params[4] * 2^16) + params[5] 
+	frequency2 = params[6] 
+	pulse3 = (params[7] * 2^16) + params[8] 
+	frequency3 = params[9] 
+	pulse4 = (params[10] * 2^16) + params[11] 
+	frequency4 = params[12] 
+	
+	local data_tojson = {Pulse1=pulse1,Frequency1=frequency1,Pulse2=pulse2,Frequency2=frequency2,Pulse3=pulse3,Frequency3=frequency3,Pulse4=pulse4,Frequency4=frequency4}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+--建大仁科 三插针土壤水分电导率 RS-ECH-NO1-TR-1
+function JDRK_ECH(params)
+	local cjson = require "cjson"
+	local moisture
+	local electrical
+	local salt
+	local tds
+
+	moisture = params[1]/10
+	electrical = params[3]
+	salt = params[4]
+	tds = params[5]
+	local data_tojson = {Moisture =moisture,Electrical=electrical,Salt =salt,TDS=tds}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+--伟思水位计
+function WFX_40(params)
+	local cjson = require "cjson"
+	local water_level
+
+	water_level = params[1]
+	local data_tojson = {Water_level=water_level}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+
+--建大仁科 壁挂式水浸变送器
+function JDRK_SJN01(params)
+	local cjson = require "cjson"
+	local is_water
+	is_water = params[1]
+	local data_tojson = {Is_Water=is_water}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+-- 红斯迈RS485智能无线广角人体红外线探头
+function HSM_400S_485(params)
+	local cjson = require "cjson"
+	local is_person
+	is_person = params[1]
+	local data_tojson = {Is_Person=is_person}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+-- 红斯迈门磁开关
+function HSM_MC18_RS485(params)
+	local cjson = require "cjson"
+	local WARRING
+	WARRING = params[1]
+	local data_tojson = {WARRING=WARRING}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+-- 威盟士空气质量传感器
+function SN_3002_PM_N01(params)
+	local cjson = require "cjson"
+	local PM2_5
+	local PM10
+	local PM1_0
+
+	PM2_5 = params[1]
+	PM10 =  params[2]
+	PM1_0 = params[3]
+	local data_tojson = {PM2_5=PM2_5,PM10=PM10,PM1_0=PM1_0}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+--精迅畅通光照传感器
+function JXBS_3001_GZ(params)
+	local cjson = require "cjson"
+	local GZ
+	GZ = (params[1] * 2^16)+ params[2]
+	local data_tojson = {GZ=GZ}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+-- 精迅畅通烟雾探测器
+function JXBS_3001_YG(params)
+	local cjson = require "cjson"
+	local YW
+	YW =  params[1]
+	local data_tojson = {YW=YW}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+-- 兆泰盛甲烷传感器（485型） 10%LEL=5000ppm=0.5%VOL
+function ZTS_3002_CH4_N01(params)
+	local cjson = require "cjson"
+	local CH4
+	CH4 =  params[1]*500 
+	local data_tojson = {CH4=CH4}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+-- 兆泰一氧化碳温湿度变送器
+function ZTS_3002_COWS_N01(params)
+	local cjson = require "cjson"
+	local CO
+	local TEM
+	local HUM
+
+	HUM = params[1]/10
+	TEM =  u16_int16(params[2])/10
+	CO = params[3]
+	local data_tojson = {TEM=TEM,HUM=HUM,CO=CO}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+-- 泽泰人体存在传感器
+function ZT_CZSXD034_485(params)
+	local cjson = require "cjson"
+	local Is_Person
+
+	Is_Person = params[1]
+	local data_tojson = {Is_Person=Is_Person}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+-- SD123-ST01-LC 万图思睿温湿度传感器
+function SD123_ST01_LC(params)
+	local cjson = require "cjson"
+	local TEM
+	local HUM
+
+	TEM = u16_int16(params[1])/10
+	HUM = params[2]/10
+	local data_tojson = {TEM=TEM,HUM=HUM}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+
+-- JR-SG01 声光报警器
+function JR_SG01(params)
+	local cjson = require "cjson"
+	local staus
+	staus = params[1]
+	local data_tojson = {staus=staus}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+
+--建大仁科翻斗式雨量桶
+function JR_YL(params)
+	local cjson = require "cjson"
+	local rainfall
+	local SSYL
+	rainfall = params[1]/10
+	SSYL =  params[2]/10
+	local data_tojson = {rainfall=rainfall,SSYL=SSYL}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+--建大仁科 风向传感器
+function JR_FXJT(params)
+	local cjson = require "cjson"
+	local fx
+
+	fx = params[1]/10
+	local data_tojson = {FX=fx}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+-- 18B20温度
+function KLT_RS485_18B20(params)
+	local cjson = require "cjson"
+	local temperature
+
+	temperature = u16_int16(params[1])/10
+	local data_tojson = {Temperature=temperature}
+	local jsondata = cjson.encode(data_tojson)
+	return jsondata
+end
+
+-- 稳控振线采集模块温度采集
+function WK_RS485_T(params)
+	local cjson = require "cjson"
+	local temperature
+	temperature = params[1] /10
+	local data_tojson = {Temperature=temperature}
+	local jsondata = cjson.encode(data_tojson)
+
+	return jsondata
+
+end
+
+-- 稳控振线采集模块频率采集
+function WK_RS485_HZ(params)
+	local cjson = require "cjson"
+	local frequency
+
+	frequency = params[1] /10
+	local data_tojson = {Frequency=frequency}
+	local jsondata = cjson.encode(data_tojson)
+
+	return jsondata
+
+end
+

@@ -1,0 +1,17 @@
+# 建大仁科 二氧化碳温湿度变送器 RS-WS-NO1-2
+ config modbus_rtu 
+ 	option serial		'ttyXRUSB2'        #占用串口
+ 	option slave		'1'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'HK-JDQ-TEST'  #传感器编码
+ 	list   func_mes '1.1.8.HK_RALYCtl'      #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+
+ config modbus_rtu 
+ 	option serial		'ttyS0'        #占用串口
+ 	option slave		'1'            #从机地址
+ 	option r_enable		'1'            #读使能
+ 	option period       '5'			   #采集周期
+ 	option sensor_code		'WK-JX'  #传感器编码
+ 	list func_mes '3.35.1.WK_RS485_HZ'     #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法   
+    list func_mes '3.41.1.WK_RS485_T'	 #功能码 寄存器地址(十进制)  寄存器数量  数据处理方法
