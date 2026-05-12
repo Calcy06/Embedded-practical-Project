@@ -1,0 +1,1 @@
+/usr/bin/cc    CMakeFiles/sub.dir/src/sub.c.o CMakeFiles/sub.dir/src/cfg/cfg.c.o CMakeFiles/sub.dir/src/ubus/ubus.c.o  -o sub  -lblobmsg_json -lubox -luci -lubus -ljson-c -lmodbus 

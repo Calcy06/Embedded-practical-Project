@@ -6,4 +6,4 @@ config serial
 	option data_bits	'8'
 	option stop_bits	'1'
 	option check_bits	'N'
- 
+

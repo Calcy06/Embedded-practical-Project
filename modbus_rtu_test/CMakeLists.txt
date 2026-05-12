@@ -1,39 +1,40 @@
-# 指定 CMake 最低版本要求，低于 3.5 版本的 CMake 会报错
 cmake_minimum_required(VERSION 3.5)
 
-# 定义项目名称为 modbus_rtu，使用 C 语言编译
 project(modbus_rtu C)
 
-# 定义变量：MODBUS_TOP_LEVEL_DIRECTORY = 当前 CMakeLists.txt 所在目录
-# 用来方便后续引用源码路径，避免重复写长路径
+# 定义项目根目录路径（当前CMake文件所在目录）
 set(MODBUS_TOP_LEVEL_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}")
 
-# 定义一个函数：target_sources_modbus_rtu
-# 作用：给指定目标（target）添加源码和头文件路径
-function(target_sources_modbus_rtu target)
-
-    # 给 target 添加 源文件（PRIVATE 表示仅内部使用）
+# ==============================================
+# 函数：给 target 添加通用源码（两个程序共用的代码）
+# 包含：cfg.c、ubus.c（公共库文件）
+# ==============================================
+function(target_sources_common target)
     target_sources(
         ${target}
-        PRIVATE ${MODBUS_TOP_LEVEL_DIRECTORY}/src/cfg/cfg.c          # 配置文件解析
-                ${MODBUS_TOP_LEVEL_DIRECTORY}/src/ubus/ubus.c        # ubus 通信相关
-                ${MODBUS_TOP_LEVEL_DIRECTORY}/src/modbus_rtu.c       # 主程序入口
+        PRIVATE ${MODBUS_TOP_LEVEL_DIRECTORY}/src/cfg/cfg.c
+                ${MODBUS_TOP_LEVEL_DIRECTORY}/src/ubus/ubus.c
     )
 
-    # 给 target 添加 头文件搜索路径
-    target_include_directories(${target} PUBLIC ${MODBUS_TOP_LEVEL_DIRECTORY}/src/ubus)
-    target_include_directories(${target} PUBLIC ${MODBUS_TOP_LEVEL_DIRECTORY}/src/cfg)
-    target_include_directories(${target} PUBLIC ${MODBUS_TOP_LEVEL_DIRECTORY}/src)
-
+    # 添加头文件搜索路径
+    target_include_directories(${target}
+        PUBLIC ${MODBUS_TOP_LEVEL_DIRECTORY}/src/ubus
+        PUBLIC ${MODBUS_TOP_LEVEL_DIRECTORY}/src/cfg
+        PUBLIC ${MODBUS_TOP_LEVEL_DIRECTORY}/src
+    )
 endfunction()
 
-# 添加编译选项：-g 表示生成调试信息（方便 GDB 调试）
-add_compile_options( -g )
+# 全局编译选项：-g 生成调试信息
+add_compile_options(-g)
 
-# 定义生成可执行文件，名字叫 modbus_rtu
-add_executable(modbus_rtu)
-
-# 给可执行文件链接外部库（OpenWRT 标准库 + modbus 库）
+# ==============================================
+# 生成主程序：modbus_rtu
+# 使用：modbus_rtu.c + 公共文件 cfg.c + ubus.c
+# ==============================================
+add_executable(modbus_rtu
+    ${MODBUS_TOP_LEVEL_DIRECTORY}/src/modbus_rtu.c
+)
+target_sources_common(modbus_rtu)
 target_link_libraries(modbus_rtu PRIVATE
     -lblobmsg_json
     -lubox
@@ -43,5 +44,19 @@ target_link_libraries(modbus_rtu PRIVATE
     -lmodbus
 )
 
-# 调用上面定义的函数，给 modbus_rtu 程序添加源码与头文件路径
-target_sources_modbus_rtu(modbus_rtu)
+# ==============================================
+# 生成子程序：sub
+# 使用：sub.c + 公共文件 cfg.c + ubus.c
+# ==============================================
+add_executable(sub
+    ${MODBUS_TOP_LEVEL_DIRECTORY}/src/sub.c
+)
+target_sources_common(sub)
+target_link_libraries(sub PRIVATE
+    -lblobmsg_json
+    -lubox
+    -luci
+    -lubus
+    -ljson-c
+    -lmodbus
+)

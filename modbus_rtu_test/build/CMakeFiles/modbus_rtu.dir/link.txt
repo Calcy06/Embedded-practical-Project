@@ -1,0 +1,1 @@
+/usr/bin/cc    CMakeFiles/modbus_rtu.dir/src/modbus_rtu.c.o CMakeFiles/modbus_rtu.dir/src/cfg/cfg.c.o CMakeFiles/modbus_rtu.dir/src/ubus/ubus.c.o  -o modbus_rtu  -lblobmsg_json -lubox -luci -lubus -ljson-c -lmodbus 

@@ -1,0 +1,4 @@
+/root/test/modbus_rtu_small_test/build/CMakeFiles/rebuild_cache.dir
+/root/test/modbus_rtu_small_test/build/CMakeFiles/edit_cache.dir
+/root/test/modbus_rtu_small_test/build/CMakeFiles/sub.dir
+/root/test/modbus_rtu_small_test/build/CMakeFiles/modbus_rtu.dir
